@@ -7,6 +7,7 @@ const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb://127.0.0
 
 mongoose.connect(CONNECTION_STRING);
 import UserRoutes from "./users/routes.js";
+import YelpRoutes from "./yelp/routes.js";
 import cors from "cors";
 const app = express();
 app.use(express.json());
@@ -39,6 +40,6 @@ const sessionOptions = {
   
 
 UserRoutes(app);
-
+YelpRoutes(app);
 
 app.listen(process.env.PORT || 4000);
