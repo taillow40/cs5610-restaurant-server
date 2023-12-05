@@ -2,6 +2,7 @@
 import * as dao from "./dao.js";
 import mongoose from "mongoose";
 import RestaurantModel from "../restaurants/model.js";
+import UserModel from "../users/model.js"
 
 function ReviewRoutes(app) {
   const createReview = async (req, res) => {
@@ -13,11 +14,27 @@ function ReviewRoutes(app) {
       return res.status(400).json({ message: "Failed to create review" });
     }
 
-    // Assuming req.body contains restaurant_id
     const restaurantId = req.body.restaurant_id;
     if (!mongoose.Types.ObjectId.isValid(restaurantId)) {
       return res.status(400).json({ message: "Invalid restaurant ID" });
     }
+
+    const userId = req.body.user_id;
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
+      // Update the user with the new review
+      const updatedUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { $push: { reviews: review._id } },
+        { new: true }
+      );
+
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
 
     // Update the restaurant with the new review
     const updatedRestaurant = await RestaurantModel.findByIdAndUpdate(

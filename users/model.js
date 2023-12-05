@@ -33,6 +33,8 @@ const userSchema = new mongoose.Schema(
         _id: false,
       },
     ],
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'reviews' }],
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'users' }]
   },
   {
     timestamps: true,
