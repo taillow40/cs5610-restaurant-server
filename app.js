@@ -9,8 +9,10 @@ const CONNECTION_STRING =
 mongoose.connect(CONNECTION_STRING);
 import UserRoutes from "./users/routes.js";
 import YelpRoutes from "./yelp/routes.js";
-import FollowsRoutes from "./follows/follows.js";
-import LikesRoutes from "./likes/likes.js";
+import FollowsRoutes from "./follows/routes.js";
+import RestaurantRoutes from "./restaurants/routes.js";
+import ReviewRoutes from "./reviews/routes.js";
+import LikesRoutes from "./likes/routes.js";
 
 import cors from "cors";
 const app = express();
@@ -44,6 +46,8 @@ app.use(session(sessionOptions));
 UserRoutes(app);
 YelpRoutes(app);
 FollowsRoutes(app);
+ReviewRoutes(app);
+RestaurantRoutes(app);
 LikesRoutes(app);
 
 app.listen(process.env.PORT || 4000, () => {

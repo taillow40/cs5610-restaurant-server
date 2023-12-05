@@ -5,7 +5,7 @@ import * as dao from "./dao.js";
 import mongoose from "mongoose";
 import * as bcrypt from "bcrypt";
 import { randomUUID } from "crypto";
-import { projectConfig } from "./config.js";
+import { projectConfig } from "../config.js";
 
 function UserRoutes(app) {
   const createUser = async (req, res) => {
@@ -90,7 +90,7 @@ function UserRoutes(app) {
 
   const signin = async (req, res) => {
     try {
-      const { email, password, r } = req.body;
+      const { email, password, type } = req.body;
 
       // Validate login information
       const validation = loginValidation(req.body);
@@ -197,6 +197,6 @@ function UserRoutes(app) {
   app.put("/api/users/:userId", updateUser);
   app.delete("/api/users/:userId", deleteUser);
   app.post("/api/users/:userId/friends", friends);
-  // app.get("/api/users/:userId", findUserById);
+  app.get("/api/users/:userId", findUserById);
 }
 export default UserRoutes;
