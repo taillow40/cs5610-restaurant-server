@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true },
     last_name: { type: String, required: true },
     phone: String,
-    comments : {type: Array, default: []},
+    reviews : {type: Array, default: []},
   },
   { collection: "users" });
 export default userSchema;
