@@ -73,3 +73,9 @@ export const deleteSession = async (userId, sessionId) => {
     return null; // Return null if an error occurs
   }
 };
+
+export const reviews = (userId) =>
+  UserModel.findById(userId)
+    .populate("reviews")
+    .then((user) => user.reviews);
+

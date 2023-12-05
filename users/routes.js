@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import * as bcrypt from "bcrypt";
 import { randomUUID } from "crypto";
 import { projectConfig } from "../config.js";
+import UserModel from "./model.js";
 
 function UserRoutes(app) {
   const createUser = async (req, res) => {
@@ -187,6 +188,44 @@ function UserRoutes(app) {
     }
   };
 
+  const reviews = async (req, res) => {
+    const { userId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      res.status(400).send("invalid id when finding reviews: " + restauranuserIdtId);
+      return;
+    }
+    const reviews = await dao.reviews(userId);
+    res.json(reviews);
+  };
+
+  const addFriend = async (req, res) => {
+    console.log(req.body);
+    const userId = req.body.userId;
+    const friendId = req.body.friendId;
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+    if (!mongoose.Types.ObjectId.isValid(friendId)) {
+      return res.status(400).json({ message: "Invalid friend ID" });
+    }
+
+      // Update the user with the new review
+      const updatedFriend = await UserModel.findByIdAndUpdate(
+        friendId,
+        { $push: { friends: userId } },
+        { new: true }
+      );
+
+      const updatedUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { $push: { friends: friendId } },
+        { new: true }
+      );
+
+
+        res.json(updatedUser);
+  }
+
   app.post("/api/users/signup", signup);
   app.post("/api/users/signin", signin);
   app.post("/api/users/signout", userAuthentication, signout);
@@ -196,7 +235,9 @@ function UserRoutes(app) {
   app.get("/api/users", findAllUsers);
   app.put("/api/users/:userId", updateUser);
   app.delete("/api/users/:userId", deleteUser);
-  app.post("/api/users/:userId/friends", friends);
+  app.get("/api/users/:userId/friends", friends);
   app.get("/api/users/:userId", findUserById);
+  app.get("/api/users/:userId/reviews", reviews);
+  app.post("/api/users/friends", addFriend);
 }
 export default UserRoutes;
