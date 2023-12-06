@@ -1,0 +1,82 @@
+[
+  {
+    "_id": "1",
+    "first_name": "Sam",
+    "last_name": "Tomlinson",
+    "email": "sam@gmail.com",
+    "phone_number": "123-456-7890",
+    "friends": ["2", "3"]
+  },
+  {
+    "_id": "2",
+    "first_name": "Emily",
+    "last_name": "Johnson",
+    "email": "emily@gmail.com",
+    "phone_number": "987-654-3210",
+    "friends": ["1", "3"]
+  },
+  {
+    "_id": "3",
+    "first_name": "Alex",
+    "last_name": "Smith",
+    "email": "alex@gmail.com",
+    "phone_number": "555-123-4567",
+    "friends": ["1", "2"]
+  },
+  {
+    "_id": "4",
+    "first_name": "Jessica",
+    "last_name": "Brown",
+    "email": "jessica@gmail.com",
+    "phone_number": "111-222-3333",
+    "friends": ["5"]
+  },
+  {
+    "_id": "5",
+    "first_name": "Daniel",
+    "last_name": "Miller",
+    "email": "daniel@gmail.com",
+    "phone_number": "444-555-6666",
+    "friends": ["4"]
+  },
+  {
+    "_id": "6",
+    "first_name": "Sophia",
+    "last_name": "Anderson",
+    "email": "sophia@gmail.com",
+    "phone_number": "777-888-9999",
+    "friends": ["7", "8"]
+  },
+  {
+    "_id": "7",
+    "first_name": "William",
+    "last_name": "Clark",
+    "email": "william@gmail.com",
+    "phone_number": "222-333-4444",
+    "friends": ["6", "8"]
+  },
+  {
+    "_id": "8",
+    "first_name": "Olivia",
+    "last_name": "White",
+    "email": "olivia@gmail.com",
+    "phone_number": "555-666-7777",
+    "friends": ["6", "7"]
+  },
+  {
+    "_id": "9",
+    "first_name": "Ethan",
+    "last_name": "Turner",
+    "email": "ethan@gmail.com",
+    "phone_number": "888-999-0000",
+    "friends": ["10"]
+  },
+  {
+    "_id": "10",
+    "first_name": "Ava",
+    "last_name": "Perez",
+    "email": "ava@gmail.com",
+    "phone_number": "111-222-3333",
+    "friends": ["9"]
+  }
+]

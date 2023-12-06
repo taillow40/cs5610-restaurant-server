@@ -1,0 +1,194 @@
+[
+    {
+        "id": 1,
+        "user_id": 1,
+        "restaurant_id": 1,
+        "content": "Their burgers are great! They also are very generous with their fries.",
+        "content_accomodations": "The fries are fried in peanut oil",
+        "accomodations": 
+        {
+            "gluten_free": 0,
+            "nut_free": 2,
+            "dairy_free": 4,
+            "shellfish": 0,
+            "vegetarian": 0,
+            "vegan": 0
+        },
+        "rating": 4.0,
+        "date": "2023-12-01T10:00:00.000Z"
+    },
+    
+    {
+        "id": 2,
+        "user_id": 2,
+        "restaurant_id": 1,
+        "content": "Mid tier burger place. Not amazing.",
+        "content_accomodations": "",
+        "accomodations": 
+        {
+            "gluten_free": 0,
+            "nut_free": 0,
+            "dairy_free": 0,
+            "shellfish": 0,
+            "vegetarian": 0,
+            "vegan": 0
+        },
+        "rating": 3.0,
+        "date": "2023-12-02T10:00:00.000Z"
+    },
+    {
+        "id": 3,
+        "user_id": 3,
+        "restaurant_id": 1,
+        "content": "Love their milkshakes! The classic chocolate is my favorite.",
+        "content_accomodations": "They offer lactose-free milk for shakes.",
+        "accomodations": {
+          "gluten_free": 0,
+          "nut_free": 0,
+          "dairy_free": 3,
+          "shellfish": 0,
+          "vegetarian": 0,
+          "vegan": 0
+        },
+        "rating": 4.5,
+        "date": "2023-12-03T10:00:00.000Z"
+      },
+    {
+        "id": 11,
+        "user_id": 2,
+        "restaurant_id": 2,
+        "content": "Solid pizza place with a variety of toppings.",
+        "content_accomodations": "They offer gluten-free crust for those with gluten allergies.",
+        "accomodations": {
+          "gluten_free": 4,
+          "nut_free": 0,
+          "dairy_free": 2,
+          "shellfish": 0,
+          "vegetarian": 0,
+          "vegan": 0
+        },
+        "rating": 4.5,
+        "date": "2023-12-04T10:00:00.000Z"
+
+      },
+      {
+        "id": 7,
+        "user_id": 2,
+        "restaurant_id": 2,
+        "content": "The ambiance is lively. Good for group outings.",
+        "content_accomodations": "",
+        "accomodations": {
+          "gluten_free": 0,
+          "nut_free": 0,
+          "dairy_free": 0,
+          "shellfish": 0,
+          "vegetarian": 0,
+          "vegan": 0
+        },
+        "rating": 4.2,
+        "date": "2023-12-05T10:00:00.000Z"
+
+      },
+      {
+        "id": 8,
+        "user_id": 3,
+        "restaurant_id": 2,
+        "content": "Friendly staff and quick service.",
+        "content_accomodations": "",
+        "accomodations": {
+          "gluten_free": 0,
+          "nut_free": 0,
+          "dairy_free": 0,
+          "shellfish": 0,
+          "vegetarian": 0,
+          "vegan": 0
+        },
+        "rating": 4.0,
+        "date": "2023-12-06T10:00:00.000Z"
+      },
+      {
+        "id": 9,
+        "user_id": 4,
+        "restaurant_id": 2,
+        "content": "Not too crowded. Good place for a casual meal.",
+        "content_accomodations": "",
+        "accomodations": {
+          "gluten_free": 0,
+          "nut_free": 0,
+          "dairy_free": 0,
+          "shellfish": 0,
+          "vegetarian": 0,
+          "vegan": 0
+        },
+        "rating": 4.0,
+        "date": "2023-12-07T10:00:00.000Z"
+      },
+      {
+        "id": 13,
+        "user_id": 3,
+        "restaurant_id": 3,
+        "content": "Authentic Mexican flavors! The guacamole is a must-try.",
+        "content_accomodations": "",
+        "accomodations": {
+          "gluten_free": 3,
+          "nut_free": 0,
+          "dairy_free": 0,
+          "shellfish": 0,
+          "vegetarian": 2,
+          "vegan": 0
+        },
+        "rating": 5.0,
+        "date": "2023-12-08T10:00:00.000Z"
+      },
+      {
+        "id": 10,
+        "user_id": 1,
+        "restaurant_id": 3,
+        "content": "The tacos are bursting with flavor. I highly recommend trying the street corn!",
+        "content_accomodations": "",
+        "accomodations": {
+          "gluten_free": 0,
+          "nut_free": 0,
+          "dairy_free": 0,
+          "shellfish": 0,
+          "vegetarian": 2,
+          "vegan": 0
+        },
+        "rating": 4.8,
+        "date": "2023-12-09T10:00:00.000Z"
+      },
+      {
+        "id": 12,
+        "user_id": 3,
+        "restaurant_id": 3,
+        "content": "The churros are a delightful way to end the meal.",
+        "content_accomodations": "",
+        "accomodations": {
+          "gluten_free": 0,
+          "nut_free": 0,
+          "dairy_free": 0,
+          "shellfish": 0,
+          "vegetarian": 0,
+          "vegan": 0
+        },
+        "rating": 4.3,
+        "date": "2023-12-10T10:00:00.000Z"
+      },
+      {
+        "id": 14,
+        "user_id": 4,
+        "restaurant_id": 4,
+        "content": "Cozy coffee shop with a selection of pastries. Great for a quick bite.",
+        "content_accomodations": "They have almond milk available for coffee.",
+        "accomodations": {
+          "gluten_free": 0,
+          "nut_free": 4,
+          "dairy_free": 2,
+          "shellfish": 0,
+          "vegetarian": 0,
+          "vegan": 0
+        },
+        "rating": 4.0,
+        "date": "2023-12-11T10:00:00.000Z"
+      }
+]
