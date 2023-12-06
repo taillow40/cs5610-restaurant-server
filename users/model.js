@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["RESTAURANT", "USER", "MODERATOR"],
+      enum: ["RESTAURANT", "USER", "ADMIN"],
       default: "USER",
     },
     sessions: [
@@ -33,8 +33,9 @@ const userSchema = new mongoose.Schema(
         _id: false,
       },
     ],
-    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'reviews' }],
-    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'users' }]
+    cuisine: {
+      type: [String],
+    },
   },
   {
     timestamps: true,

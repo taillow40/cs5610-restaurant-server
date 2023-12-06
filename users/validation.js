@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-const userEnum = ["RESTAURANT", "USER"];
+const userEnum = ["RESTAURANT", "USER", "ADMIN"];
 export const userSignUpValidation = ({
   email,
   first_name,

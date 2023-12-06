@@ -1,15 +1,14 @@
 import { userSignUpValidation, loginValidation } from "./validation.js";
-import { userAuthentication } from "./authenticate.js";
+import { userAuthentication } from "../middlewares/authenticate.js";
 import jwt from "jsonwebtoken";
+import { generateToken } from "../utils/jwt.js";
 import * as dao from "./dao.js";
 import mongoose from "mongoose";
-import * as bcrypt from "bcrypt";
 import { randomUUID } from "crypto";
-import { projectConfig } from "../config.js";
-import UserModel from "./model.js";
 
 function UserRoutes(app) {
   const createUser = async (req, res) => {
+    // console.log(req.body);
     const user = await dao.createUser(req.body);
     res.json(user);
   };
@@ -103,7 +102,7 @@ function UserRoutes(app) {
       }
 
       // Find user with password
-      const user = await dao.findUser({ email, password, type });
+      const user = await dao.findUser({ email, type, password });
       if (!user) {
         return res
           .status(400)
@@ -116,18 +115,7 @@ function UserRoutes(app) {
       await dao.addSession({ _id: user._id }, { id: sessionId });
 
       // Generate a JWT token
-      const token = jwt.sign(
-        {
-          _id: user._id,
-          email: user.email,
-          session: sessionId,
-          type: user.type,
-        },
-        projectConfig?.jwt?.key,
-        {
-          expiresIn: projectConfig?.jwt?.expire,
-        }
-      );
+      const token = generateToken({ ...user, session: sessionId });
       return res.json({ success: true, data: token });
     } catch (error) {
       console.log(error);
@@ -158,6 +146,7 @@ function UserRoutes(app) {
     const { _id, type } = req.user;
     try {
       const user = await dao.findUser({ _id, type });
+      console.log(user);
       return res.status(200).send({ success: true, data: user });
     } catch (err) {
       console.log(err);
@@ -188,44 +177,6 @@ function UserRoutes(app) {
     }
   };
 
-  const reviews = async (req, res) => {
-    const { userId } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      res.status(400).send("invalid id when finding reviews: " + restauranuserIdtId);
-      return;
-    }
-    const reviews = await dao.reviews(userId);
-    res.json(reviews);
-  };
-
-  const addFriend = async (req, res) => {
-    console.log(req.body);
-    const userId = req.body.userId;
-    const friendId = req.body.friendId;
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ message: "Invalid user ID" });
-    }
-    if (!mongoose.Types.ObjectId.isValid(friendId)) {
-      return res.status(400).json({ message: "Invalid friend ID" });
-    }
-
-      // Update the user with the new review
-      const updatedFriend = await UserModel.findByIdAndUpdate(
-        friendId,
-        { $push: { friends: userId } },
-        { new: true }
-      );
-
-      const updatedUser = await UserModel.findByIdAndUpdate(
-        userId,
-        { $push: { friends: friendId } },
-        { new: true }
-      );
-
-
-        res.json(updatedUser);
-  }
-
   app.post("/api/users/signup", signup);
   app.post("/api/users/signin", signin);
   app.post("/api/users/signout", userAuthentication, signout);
@@ -235,9 +186,7 @@ function UserRoutes(app) {
   app.get("/api/users", findAllUsers);
   app.put("/api/users/:userId", updateUser);
   app.delete("/api/users/:userId", deleteUser);
-  app.get("/api/users/:userId/friends", friends);
-  app.get("/api/users/:userId", findUserById);
-  app.get("/api/users/:userId/reviews", reviews);
-  app.post("/api/users/friends", addFriend);
+  app.post("/api/users/:userId/friends", friends);
+  // app.get("/api/users/:userId", findUserById);
 }
 export default UserRoutes;
