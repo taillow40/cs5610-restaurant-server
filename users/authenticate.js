@@ -9,6 +9,10 @@ export const userAuthentication = async (req, res, next) => {
     req.headers["x-access-token"] ||
     req.header("Authorization");
 
+  console.log("REQ BODy", req.body)
+  console.log("HEADER", req.header("Authorization"));
+  console.log("TOKEN", token);
+
   if (!token || token === "") {
     return res
       .status(401)
@@ -16,6 +20,9 @@ export const userAuthentication = async (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, projectConfig?.jwt?.key);
+    
+    console.log("DECODED", decoded);
+    
     const user = await dao.findUser({
       _id: decoded?._id,
       "sessions.id": decoded.session,

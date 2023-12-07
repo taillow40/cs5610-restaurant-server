@@ -53,7 +53,7 @@ export const userSignUpValidation = ({
   return { value, error };
 };
 
-export const loginValidation = ({ email, password, type }) => {
+export const loginValidation = ({ email, password }) => {
   const joiSchema = Joi.object().keys({
     email: Joi.string().lowercase().email().required().messages({
       "string.base": `email should be a type of String`,
@@ -61,7 +61,7 @@ export const loginValidation = ({ email, password, type }) => {
       "string.email": `Please enter Correct email`,
       "any.required": `email is required.`,
     }),
-    type: Joi.string()
+   /* type: Joi.string()
       .required()
       .valid(...userEnum)
       .messages({
@@ -69,7 +69,7 @@ export const loginValidation = ({ email, password, type }) => {
         "string.empty": `type cannot be an empty field`,
         "any.required": `type is required.`,
         "any.only": `Invalid user type. Allowed values: ${userEnum.join(", ")}`,
-      }),
+      }),*/
     password: Joi.string().required().messages({
       "string.base": `password should be a type of Text`,
       "string.empty": `password cannot be an empty field`,
@@ -77,7 +77,7 @@ export const loginValidation = ({ email, password, type }) => {
     }),
   });
   const { value, error } = joiSchema.validate(
-    { email, password, type },
+    { email, password },
     { escapeHtml: true }
   );
   return { value, error };

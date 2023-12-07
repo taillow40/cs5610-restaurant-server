@@ -91,10 +91,14 @@ function UserRoutes(app) {
 
   const signin = async (req, res) => {
     try {
-      const { email, password, type } = req.body;
-
+      const {username, password } = req.body;
+      const email = username;
+      console.log(req.body);
+      console.log("email:", email);
+      console.log("password", password);
       // Validate login information
-      const validation = loginValidation(req.body);
+      const validation = loginValidation({email, password});
+      console.log("Validation", validation);
       if (validation.error) {
         return res.status(422).json({
           success: false,
@@ -103,7 +107,9 @@ function UserRoutes(app) {
       }
 
       // Find user with password
-      const user = await dao.findUser({ email, password, type });
+      console.log("email:", email);
+      const user = await dao.findUser({ email, password });
+      console.log("User", user);
       if (!user) {
         return res
           .status(400)
@@ -156,8 +162,10 @@ function UserRoutes(app) {
 
   const account = async (req, res) => {
     const { _id, type } = req.user;
+    console.log("REQ. USER", req.user);
     try {
       const user = await dao.findUser({ _id, type });
+      console.log("Account User:", user)
       return res.status(200).send({ success: true, data: user });
     } catch (err) {
       console.log(err);

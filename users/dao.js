@@ -54,7 +54,7 @@ export const addSession = async (query, session) => {
       .select("-password")
       .lean();
   } catch (error) {
-    console.log(error);
+    console.log("Add Session Error", error);
     return null; // Return null if an error occurs
   }
 };
