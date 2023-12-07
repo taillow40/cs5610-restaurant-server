@@ -1,5 +1,6 @@
 
 import * as dao from "./dao.js";
+import * as daoReview from "../reviews/dao.js"
 import mongoose from "mongoose";
 import {restaurantFromId} from "../yelp/functions.js"
 import Database from "../Database/index.js"
@@ -100,16 +101,44 @@ function RestaurantRoutes(app) {
       restaurants = Database.restaurants;
     }
 
-    return restaurants.filter((restaurant) => {
+    const filteredRestaurants = restaurants.filter((restaurant) => {
       const nameMatch = name ? restaurant.name.toLowerCase().includes(name.toLowerCase()) : true;
       const cuisineMatch = cuisine ? restaurant.cuisine.some(c => c.toLowerCase().includes(cuisine.toLowerCase())) : true;
       const zipCodeMatch = zipCode ? restaurant.zipCode.toLowerCase().includes(zipCode.toLowerCase()) : true;
-      const cityMatch = city ? restaurant.city.toLowerCase().includes(city.toLowerCase()) : true;
+      const cityMatch = city ? restaurant.City.toLowerCase().includes(city.toLowerCase()) : true;
       const streetAddressMatch = streetAddress ? restaurant.streetAddress.toLowerCase().includes(streetAddress.toLowerCase()) : true;
   
-      return nameMatch && cuisineMatch && zipCodeMatch && cityMatch && streetAddressMatch;
+      const searchCriteria = nameMatch && cuisineMatch && zipCodeMatch && cityMatch && streetAddressMatch
+
+      return searchCriteria;
+    })
+
+    const reviewsPromises = filteredRestaurants.map(async (filteredRestaurant) => {
+      console.log(`Fetching reviews for restaurant: ${filteredRestaurant._id}`);
+      const reviews = await dao.findReviewsForRestaurant(filteredRestaurant._id);
+      const averageRating = calculateAverageRating(reviews);
+      return { ...filteredRestaurant.toObject(), averageRating };
     });
+  
+
+    // Wait for all the promises to resolve
+    const restaurantsWithRating = await Promise.all(reviewsPromises);
+
+    console.log("Filtered Restaurants with ratings:", restaurantsWithRating);
+
+    return restaurantsWithRating;
+
   };
+
+  const calculateAverageRating = (reviews) => {
+    if (!reviews || reviews.length === 0) {
+      return 0;
+    }
+  
+    const sum = reviews.reduce((total, review) => total + review.rating, 0);
+    return sum / reviews.length;
+  };
+
   
   app.get('/api/search', async (req, res) => {
     try {
