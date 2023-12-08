@@ -1,0 +1,222 @@
+[
+  {
+    "id": 1,
+    "name": "Italian Delight",
+    "Lat": 42.3601,
+    "Long": -71.0589,
+    "streetAddress": "123 Main Street",
+    "City": "Boston",
+    "zipCode": "02108",
+    "cuisine": ["Italian"],
+    "reviews": [4, 5, 4.5, 4.3, 4.4, 4.7, 4.8]
+  },
+  {
+    "id": 2,
+    "name": "Sizzling Sushi",
+    "Lat": 42.3496,
+    "Long": -71.0698,
+    "streetAddress": "456 Oak Street",
+    "City": "Cambridge",
+    "zipCode": "02139",
+    "cuisine": ["Japanese"],
+    "reviews": [4.2, 4.8, 4.6, 3.2, 3.9, 3.7]
+  },
+  {
+    "id": 3,
+    "name": "Taco Town",
+    "Lat": 42.3736,
+    "Long": -71.1097,
+    "streetAddress": "789 Pine Street",
+    "City": "Somerville",
+    "zipCode": "02143",
+    "cuisine": ["Mexican"],
+    "reviews": [3.8, 4, 3.5]
+  },
+  {
+    "id": 4,
+    "name": "Burger Barn",
+    "Lat": 42.3364,
+    "Long": -71.0972,
+    "streetAddress": "101 Walnut Street",
+    "City": "Brookline",
+    "zipCode": "02445",
+    "cuisine": ["American"],
+    "reviews": [4.7, 4.5, 4.9]
+  },
+  {
+    "id": 5,
+    "name": "Spicy Curry House",
+    "Lat": 42.2840,
+    "Long": -71.1097,
+    "streetAddress": "202 Maple Street",
+    "City": "Newton",
+    "zipCode": "02458",
+    "cuisine": ["Indian"],
+    "reviews": [4.3, 4.2, 4.1]
+  },
+  {
+    "id": 6,
+    "name": "Mediterranean Flavors",
+    "Lat": 42.3584,
+    "Long": -71.0608,
+    "streetAddress": "303 Elm Street",
+    "City": "Waltham",
+    "zipCode": "02451",
+    "cuisine": ["Mediterranean"],
+    "reviews": [4.6, 4.4, 4.7]
+  },
+  {
+    "id": 7,
+    "name": "Vegan Bliss",
+    "Lat": 42.3732,
+    "Long": -71.1097,
+    "streetAddress": "404 Birch Street",
+    "City": "Arlington",
+    "zipCode": "02474",
+    "cuisine": ["Vegetarian"],
+    "reviews": [4.0, 3.8, 3.9]
+  },
+  {
+    "id": 8,
+    "name": "Sizzling BBQ Joint",
+    "Lat": 42.3314,
+    "Long": -71.0990,
+    "streetAddress": "505 Cedar Street",
+    "City": "Lexington",
+    "zipCode": "02420",
+    "cuisine": ["Barbecue"],
+    "reviews": [4.9, 4.7, 4.8]
+  },
+  {
+    "id": 9,
+    "name": "Fresh Seafood Haven",
+    "Lat": 42.2876,
+    "Long": -71.1167,
+    "streetAddress": "606 Spruce Street",
+    "City": "Watertown",
+    "zipCode": "02472",
+    "cuisine": ["Seafood"],
+    "reviews": [4.5, 4.3, 4.6]
+  },
+  {
+    "id": 10,
+    "name": "Sweet Tooth Paradise",
+    "Lat": 42.3601,
+    "Long": -71.0589,
+    "streetAddress": "707 Pine Street",
+    "City": "Belmont",
+    "zipCode": "02478",
+    "cuisine": ["Desserts"],
+    "reviews": [4.2, 4.0, 4.1]
+  },
+  {
+    "id": 11,
+    "name": "Cozy Breakfast Nook",
+    "Lat": 42.3736,
+    "Long": -71.1097,
+    "streetAddress": "808 Cedar Street",
+    "City": "Medford",
+    "zipCode": "02155",
+    "cuisine": ["Breakfast"],
+    "reviews": [4.6, 4.8, 4.7]
+  },
+  {
+    "id": 12,
+    "name": "Pasta Paradise",
+    "Lat": 42.3496,
+    "Long": -71.0698,
+    "streetAddress": "909 Oak Street",
+    "City": "Chelsea",
+    "zipCode": "02150",
+    "cuisine": ["Italian"],
+    "reviews": [4.3, 4.5, 4.4]
+  },
+  {
+    "id": 13,
+    "name": "Vegetarian Haven",
+    "Lat": 42.2840,
+    "Long": -71.1097,
+    "streetAddress": "1010 Maple Street",
+    "City": "Everett",
+    "zipCode": "02149",
+    "cuisine": ["Vegetarian"],
+    "reviews": [4.1, 4.0, 4.2]
+  },
+  {
+    "id": 14,
+    "name": "Sushi Sensation",
+    "Lat": 42.3364,
+    "Long": -71.0972,
+    "streetAddress": "1111 Walnut Street",
+    "City": "Revere",
+    "zipCode": "02151",
+    "cuisine": ["Japanese"],
+    "reviews": [4.7, 4.9, 4.8]
+  },
+  {
+    "id": 15,
+    "name": "BBQ Bliss",
+    "Lat": 42.3601,
+    "Long": -71.0589,
+    "streetAddress": "1212 Pine Street",
+    "City": "Winchester",
+    "zipCode": "01890",
+    "cuisine": ["Barbecue"],
+    "reviews": [4.4, 4.6, 4.5]
+  },
+  {
+    "id": 16,
+    "name": "Crispy Crepes",
+    "Lat": 42.349,
+    "Long": -71.069,
+    "streetAddress": "1818 Oak Street",
+    "City": "Woburn",
+    "zipCode": "01801",
+    "cuisine": ["French"],
+    "reviews": [4.2, 4.1, 4.3]
+  },
+  {
+    "id": 17,
+    "name": "Seafood Spectacle",
+    "Lat": 42.3736,
+    "Long": -71.1097,
+    "streetAddress": "1414 Pine Street",
+    "City": "Burlington",
+    "zipCode": "01803",
+    "cuisine": ["Seafood"],
+    "reviews": [4.8, 4.7, 4.9]
+  },
+  {
+    "id": 18,
+    "name": "Mouthwatering Munchies",
+    "Lat": 42.3364,
+    "Long": -71.0972,
+    "streetAddress": "1515 Walnut Street",
+    "City": "Stoneham",
+    "zipCode": "02180",
+    "cuisine": ["Snacks"],
+    "reviews": [4.0, 3.8, 3.9]
+  },
+  {
+    "id": 19,
+    "name": "Pizza Paradise",
+    "Lat": 42.3584,
+    "Long": -71.0608,
+    "streetAddress": "1616 Elm Street",
+    "City": "Melrose",
+    "zipCode": "02176",
+    "cuisine": ["Italian"],
+    "reviews": [4.5, 4.3, 4.6]
+  },
+  {
+    "id": 20,
+    "name": "Tasty Tacos",
+    "Lat": 42.3314,
+    "Long": -71.0990,
+    "streetAddress": "1717 Cedar Street",
+    "City": "Saugus",
+    "zipCode": "01906",
+    "cuisine": ["Mexican"],
+    "reviews": [3.9, 3.7, 4.0, 2.0, 1.0, 2.5, 2.6, 3.0]
+  }
+]
