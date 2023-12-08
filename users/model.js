@@ -36,6 +36,8 @@ const userSchema = new mongoose.Schema(
     cuisine: {
       type: [String],
     },
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "reviews" }],
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
   },
   {
     timestamps: true,
