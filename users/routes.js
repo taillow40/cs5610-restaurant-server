@@ -1,16 +1,16 @@
 import { userSignUpValidation, loginValidation } from "./validation.js";
-import { userAuthentication } from "./authenticate.js";
+import { userAuthentication } from "../middlewares/authenticate.js";
 import jwt from "jsonwebtoken";
 import { generateToken } from "../utils/jwt.js";
 import * as dao from "./dao.js";
 import mongoose from "mongoose";
-import * as bcrypt from "bcrypt";
 import { randomUUID } from "crypto";
 import { projectConfig } from "../config.js";
 import UserModel from "./model.js";
  
 function UserRoutes(app) {
   const createUser = async (req, res) => {
+    // console.log(req.body);
     const user = await dao.createUser(req.body);
     res.json(user);
   };
@@ -105,7 +105,7 @@ function UserRoutes(app) {
       }
  
       // Find user with password
-      const user = await dao.findUser({ email, password, type });
+      const user = await dao.findUser({ email, type, password });
       if (!user) {
         return res
           .status(400)
@@ -149,6 +149,7 @@ function UserRoutes(app) {
     const { _id, type } = req.user;
     try {
       const user = await dao.findUser({ _id, type });
+      console.log(user);
       return res.status(200).send({ success: true, data: user });
     } catch (err) {
       console.log(err);
@@ -227,10 +228,8 @@ function UserRoutes(app) {
   app.get("/api/users", findAllUsers);
   app.put("/api/users/:userId", updateUser);
   app.delete("/api/users/:userId", deleteUser);
-  app.get("/api/users/:userId/friends", friends);
-  app.get("/api/users/:userId", findUserById);
-  app.get("/api/users/:userId/reviews", reviews);
-  app.post("/api/users/friends", addFriend);
+  app.post("/api/users/:userId/friends", friends);
+  // app.get("/api/users/:userId", findUserById);
 }
 
 export default UserRoutes;

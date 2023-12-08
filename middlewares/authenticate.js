@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { projectConfig } from '../config';
-import * as dao from "../users/dao";
+import { projectConfig } from '../config.js';
+import * as dao from "../users/dao.js";
 
 export const userAuthentication = async (req, res, next) => {
     const token =

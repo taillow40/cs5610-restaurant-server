@@ -3,8 +3,8 @@ import "dotenv/config";
 import express from "express";
 import session from "express-session";
 import mongoose from "mongoose";
-const CONNECTION_STRING =
-  process.env.DB_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas";
+const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas";
+// const CONNECTION_STRING = "mongodb://127.0.0.1:27017/kanbas";
 
 console.log("DB CONNECTION STRING", CONNECTION_STRING);
 
@@ -15,6 +15,7 @@ import FollowsRoutes from "./follows/routes.js";
 import RestaurantRoutes from "./restaurants/routes.js";
 import ReviewRoutes from "./reviews/routes.js";
 import LikesRoutes from "./likes/routes.js";
+import FavoritestRoutes from "./favorites/routes.js";
 
 import cors from "cors";
 const app = express();
@@ -51,6 +52,7 @@ FollowsRoutes(app);
 ReviewRoutes(app);
 RestaurantRoutes(app);
 LikesRoutes(app);
+FavoritestRoutes(app);
 
 app.listen(process.env.PORT || 4000, () => {
   console.log("listening on port 4000");
