@@ -1,16 +1,16 @@
 import { userSignUpValidation, loginValidation } from "./validation.js";
-import { userAuthentication } from "../middlewares/authenticate.js";
+import { userAuthentication } from "./authenticate.js";
 import jwt from "jsonwebtoken";
 import { generateToken } from "../utils/jwt.js";
 import * as dao from "./dao.js";
 import mongoose from "mongoose";
+import * as bcrypt from "bcrypt";
 import { randomUUID } from "crypto";
 import { projectConfig } from "../config.js";
 import UserModel from "./model.js";
  
 function UserRoutes(app) {
   const createUser = async (req, res) => {
-    // console.log(req.body);
     const user = await dao.createUser(req.body);
     res.json(user);
   };
@@ -105,7 +105,7 @@ function UserRoutes(app) {
       }
  
       // Find user with password
-      const user = await dao.findUser({ email, type, password });
+      const user = await dao.findUser({ email, password, type });
       if (!user) {
         return res
           .status(400)
@@ -149,7 +149,6 @@ function UserRoutes(app) {
     const { _id, type } = req.user;
     try {
       const user = await dao.findUser({ _id, type });
-      console.log(user);
       return res.status(200).send({ success: true, data: user });
     } catch (err) {
       console.log(err);
@@ -193,30 +192,36 @@ function UserRoutes(app) {
   };
  
   const addFriend = async (req, res) => {
-    console.log(req.body);
     const userId = req.body.userId;
     const friendId = req.body.friendId;
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ message: "Invalid user ID" });
+    // if (!mongoose.Types.ObjectId.isValid(userId)) {
+    //   return res.status(400).json({ message: "Invalid user ID" });
+    // }
+    // if (!mongoose.Types.ObjectId.isValid(friendId)) {
+    //   return res.status(400).json({ message: "Invalid friend ID" });
+    // }
+    const user = await UserModel.findById(userId);
+    const isFriend = user.friends.includes(friendId);
+    if (isFriend) {
+      const updatedUser = await UserModel.findByIdAndUpdate(userId, { $pull: { friends: friendId } });
+      await UserModel.findByIdAndUpdate(friendId, { $pull: { friends: userId } });
+      res.json(updatedUser);
     }
-    if (!mongoose.Types.ObjectId.isValid(friendId)) {
-      return res.status(400).json({ message: "Invalid friend ID" });
+    else {
+      const updatedFriend = await UserModel.findByIdAndUpdate(
+        friendId,
+        { $push: { friends: userId } },
+        { new: true }
+      );
+   
+      const updatedUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { $push: { friends: friendId } },
+        { new: true }
+      );
+      res.json(updatedUser);
     }
  
-    // Update the user with the new review
-    const updatedFriend = await UserModel.findByIdAndUpdate(
-      friendId,
-      { $push: { friends: userId } },
-      { new: true }
-    );
- 
-    const updatedUser = await UserModel.findByIdAndUpdate(
-      userId,
-      { $push: { friends: friendId } },
-      { new: true }
-    );
- 
-    res.json(updatedUser);
   };
  
   app.post("/api/users/signup", signup);
@@ -228,8 +233,10 @@ function UserRoutes(app) {
   app.get("/api/users", findAllUsers);
   app.put("/api/users/:userId", updateUser);
   app.delete("/api/users/:userId", deleteUser);
-  app.post("/api/users/:userId/friends", friends);
-  // app.get("/api/users/:userId", findUserById);
+  app.get("/api/users/:userId/friends", friends);
+  app.get("/api/users/:userId", findUserById);
+  app.get("/api/users/:userId/reviews", reviews);
+  app.post("/api/users/friends", addFriend);
 }
 
 export default UserRoutes;
