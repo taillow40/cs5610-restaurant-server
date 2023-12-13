@@ -62,7 +62,10 @@ function UserRoutes(app) {
  
   const signup = async (req, res) => {
     // Validate user information
-    const validation = userSignUpValidation(req.body);
+    const validation = userSignUpValidation({
+      ...req.body,
+      last_name: req.body?.type === "RESTAURANT" ? "_" : req.body.last_name
+    });
     if (validation.error) {
       return res
         .status(422)

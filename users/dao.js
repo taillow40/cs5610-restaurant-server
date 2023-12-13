@@ -4,9 +4,10 @@ import UserModel from "./model.js";
 // Function to add a new user to the database
 export const createUser = async (data) => {
   try {
+    let restaurant;
     if (data.type === "RESTAURANT") {
-      await createRestaurant({
-        name: `${data.first_name} ${data.last_name}`,
+      restaurant = await createRestaurant({
+        name: data.first_name,
         Lat: data.Lat,
         Long: data.Long,
         streetAddress: data.streetAddress,
@@ -17,8 +18,12 @@ export const createUser = async (data) => {
       });
     }
     // Create a new user using the UserModel schema
-    console.log(23456);
-    const createdUser = await UserModel.create(data);
+    let payload = {
+      ...data,
+      restaurant: restaurant?._id,
+    };
+    console.log("payload :: ", payload);
+    const createdUser = await UserModel.create(payload);
 
     // Extract the user data as a plain JavaScript object,
     const newUser = createdUser?.toJSON();

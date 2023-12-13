@@ -3,8 +3,11 @@ import "dotenv/config";
 import express from "express";
 import session from "express-session";
 import mongoose from "mongoose";
-const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas";
-// const CONNECTION_STRING = "mongodb://127.0.0.1:27017/kanbas";
+const CONNECTION_STRING =
+  process.env.DB_CONNECTION_STRING ||
+  "mongodb+srv://NotAdmin:password12345@cs5610-restaurant.w2t6t8x.mongodb.net/?retryWrites=true&w=majority";
+
+console.log("DB CONNECTION STRING", CONNECTION_STRING);
 
 console.log("DB CONNECTION STRING", CONNECTION_STRING);
 
