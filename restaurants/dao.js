@@ -11,18 +11,32 @@ export const createRestaurant = async (data) => {
     return newRestaurant;
   } catch (error) {
     console.log(error);
-    return null; 
+    return null;
   }
 };
 
 export const findAllRestaurants = () => RestaurantModel.find();
-export const findRestaurantById = (restaurantId) => RestaurantModel.findById(restaurantId);
+export const findRestaurantById = (restaurantId) =>
+  RestaurantModel.findById(restaurantId);
+export const findAllRestaurantsByCuisine = async (cuisines) => {
+  try {
+    if (!Array.isArray(cuisines)) return [];
+    const restaurants = await RestaurantModel.find({
+      cuisine: { $in: cuisines },
+    });
+    return restaurants;
+  } catch (error) {
+    console.log("error :: ", error);
+    return Error(error);
+  }
+};
 export const findRestaurantByRestaurantname = (restaurantname) =>
   RestaurantModel.findOne({ restaurantname: restaurantname });
 
 export const updateRestaurant = (restaurantId, restaurant) =>
   RestaurantModel.updateOne({ _id: restaurantId }, { $set: restaurant });
-export const deleteRestaurant = (restaurantId) => RestaurantModel.deleteOne({ _id: restaurantId });
+export const deleteRestaurant = (restaurantId) =>
+  RestaurantModel.deleteOne({ _id: restaurantId });
 export const findReviewsForRestaurant = (restaurantId) =>
   RestaurantModel.findById(restaurantId)
     .populate("reviews")
@@ -37,4 +51,3 @@ export const findRestaurant = async (query) => {
     return null; // Return null if an error occurs
   }
 };
-

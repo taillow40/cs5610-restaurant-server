@@ -1,8 +1,8 @@
-
 import * as dao from "./dao.js";
+import * as daoReview from "../reviews/dao.js";
 import mongoose from "mongoose";
-import {restaurantFromId} from "../yelp/functions.js"
-
+import { restaurantFromId } from "../yelp/functions.js";
+import Database from "../Database/index.js";
 
 function RestaurantRoutes(app) {
   const createRestaurant = async (req, res) => {
@@ -20,6 +20,12 @@ function RestaurantRoutes(app) {
     res.json(restaurants);
   };
 
+  const findAllRestaurantsofCuisine = async (req, res) => {
+    const cuisine = req.body;
+    const restaurants = await dao.findAllRestaurantsByCuisine(cuisine);
+    return res.json(restaurants);
+  };
+
   const findRestaurantById = async (req, res) => {
     const id = req.params.restaurantId.toString();
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -27,11 +33,29 @@ function RestaurantRoutes(app) {
       res.status(400).send("invalid id");
       return;
     }
-    const restaurant = await dao.findRestaurantById(id);
-    if (!restaurant) {
-      res.status(404);
-    } else {
-      res.json(restaurant);
+
+    try {
+      const restaurant = await dao.findRestaurantById(id);
+      if (!restaurant) {
+        res.status(404).send("Restaurant Not found");
+      } else {
+        res.json(restaurant);
+      }
+    } catch (error) {
+      console.error("Error finding restaurant in MongoDB", error);
+      try {
+        const filteredRestaurant = Database.restaurants.filter(
+          (r) => r.id !== id
+        );
+        if (!filteredRestaurant) {
+          res.status(404).send("Restaurant not found locally");
+        } else {
+          res.json(filteredRestaurant);
+        }
+      } catch (localDataError) {
+        console.error("Error reading local data:", localDataError);
+        res.status(500).send("Internal Server Error");
+      }
     }
   };
 
@@ -53,7 +77,6 @@ function RestaurantRoutes(app) {
     res.json(reviews);
   };
 
-
   const createRestaurantFromYelp = async (req, res) => {
     //console.log(req)
     const response = await restaurantFromId(req.body.id);
@@ -64,16 +87,109 @@ function RestaurantRoutes(app) {
       streetAddress: response.location.address1,
       City: response.location.city,
       zipCode: response.location.zip_code,
-      cuisine: response.categories.map(category => category.title)
-  };
+      cuisine: response.categories.map((category) => category.title),
+    };
     const restaurant = await dao.createRestaurant(restaurantData);
-    res.json(restaurant)
+    res.json(restaurant);
   };
-  
-  
+
+  const filterRestaurants = async (searchCriteria) => {
+    const { name, cuisine, zipCode, city, streetAddress } = searchCriteria;
+
+    let restaurants = await dao.findAllRestaurants();
+
+    if (!restaurants) {
+      restaurants = Database.restaurants;
+    }
+
+    const filteredRestaurants = restaurants.filter((restaurant) => {
+      const nameMatch = name
+        ? restaurant.name.toLowerCase().includes(name.toLowerCase())
+        : true;
+      const cuisineMatch = cuisine
+        ? restaurant.cuisine.some((c) =>
+            c.toLowerCase().includes(cuisine.toLowerCase())
+          )
+        : true;
+      const zipCodeMatch = zipCode
+        ? restaurant.zipCode.toLowerCase().includes(zipCode.toLowerCase())
+        : true;
+      const cityMatch = city
+        ? restaurant.City.toLowerCase().includes(city.toLowerCase())
+        : true;
+      const streetAddressMatch = streetAddress
+        ? restaurant.streetAddress
+            .toLowerCase()
+            .includes(streetAddress.toLowerCase())
+        : true;
+
+      const searchCriteria =
+        nameMatch &&
+        cuisineMatch &&
+        zipCodeMatch &&
+        cityMatch &&
+        streetAddressMatch;
+
+      return searchCriteria;
+    });
+
+    const reviewsPromises = filteredRestaurants.map(
+      async (filteredRestaurant) => {
+        console.log(
+          `Fetching reviews for restaurant: ${filteredRestaurant._id}`
+        );
+        const reviews = await dao.findReviewsForRestaurant(
+          filteredRestaurant._id
+        );
+        const averageRating = calculateAverageRating(reviews);
+        return { ...filteredRestaurant.toObject(), averageRating };
+      }
+    );
+
+    // Wait for all the promises to resolve
+    const restaurantsWithRating = await Promise.all(reviewsPromises);
+
+    console.log("Filtered Restaurants with ratings:", restaurantsWithRating);
+
+    return restaurantsWithRating;
+  };
+
+  const calculateAverageRating = (reviews) => {
+    if (!reviews || reviews.length === 0) {
+      return 0;
+    }
+
+    const sum = reviews.reduce((total, review) => total + review.rating, 0);
+    return sum / reviews.length;
+  };
+
+  app.get("/api/search", async (req, res) => {
+    try {
+      const { name, cuisine, zipCode, city, streetAddress } = req.query;
+
+      const searchCriteria = {
+        name,
+        cuisine,
+        zipCode,
+        city,
+        streetAddress,
+      };
+
+      const searchResults = await filterRestaurants(searchCriteria);
+      console.log("Search Results:", searchResults);
+      res.json(searchResults);
+    } catch (error) {
+      console.error("Error in search endpoint:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
 
   app.post("/api/restaurants", createRestaurant);
   app.get("/api/restaurants", findAllRestaurants);
+  app.post(
+    "/api/restaurants/restaurantsByCousine",
+    findAllRestaurantsofCuisine
+  );
   app.put("/api/restaurants/:restaurantId", updateRestaurant);
   app.delete("/api/restaurants/:restaurantId", deleteRestaurant);
   app.post("/api/restaurants/:restaurantId/reviews", reviews);

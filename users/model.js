@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema(
     },
     last_name: {
       type: String,
-      required: true,
     },
     phone_number: {
       type: String,
@@ -36,6 +35,9 @@ const userSchema = new mongoose.Schema(
     cuisine: {
       type: [String],
     },
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "reviews" }],
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
+    restaurant: { type: mongoose.Schema.Types.ObjectId, ref: 'restaurants' },
   },
   {
     timestamps: true,

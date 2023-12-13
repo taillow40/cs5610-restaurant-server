@@ -1,14 +1,16 @@
 import mongoose from "mongoose";
 const schema = new mongoose.Schema(
   {
-    follower: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
     },
-    followed: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
-    },
+    followings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
+      },
+    ],
   },
   {
     collection: "follows",
